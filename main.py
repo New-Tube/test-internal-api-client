@@ -8,10 +8,10 @@ import test_pb2
 
 from fastapi import FastAPI
 import uvicorn
-import json
 
 NAME = "Mrs. VS Code"
 NotMagicNumber = 1488
+
 
 def run():
     try:
