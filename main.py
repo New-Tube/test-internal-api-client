@@ -8,14 +8,19 @@ import test_pb2
 
 from fastapi import FastAPI
 import uvicorn
+import json
 
 
 def run():
-    with grpc.insecure_channel("localhost:5050") as channel:
-        stub = test_pb2_grpc.TestStub(channel)
-        response = stub.Hello(test_pb2.HelloRequest(Name="Mr. Python"))
+    try:
+        with grpc.insecure_channel("internal-api:5050") as channel:
+            stub = test_pb2_grpc.TestStub(channel)
+            response = stub.Hello(test_pb2.HelloRequest(Name="Mr. Python"))
+        return {"status": "success", "response": response.Message}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
-    return response.Message
+    # return response.Message
 
 
 app = FastAPI()
@@ -23,7 +28,7 @@ app = FastAPI()
 
 @app.get("/get")
 def get():
-    return {"response": run()}
+    return {"response": json.dumps(run())}
 
 
 @app.get("/")
