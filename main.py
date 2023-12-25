@@ -29,7 +29,11 @@ app = FastAPI()
 
 @app.get("/get")
 def get():
-    return {"response": json.dumps(run())}
+    result = run()
+    if result['status'] == 'success':
+        return result['response']
+    else:
+        return result['message'][:1488]
 
 
 @app.get("/")
