@@ -11,6 +11,7 @@ import uvicorn
 import json
 
 NAME = "Mrs. VS Code"
+NotMagicNumber = 1488
 
 def run():
     try:
@@ -33,7 +34,7 @@ def get():
     if result['status'] == 'success':
         return result['response']
     else:
-        return result['message'][:1488]
+        return result['message'][:NotMagicNumber]
 
 
 @app.get("/")
