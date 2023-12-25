@@ -11,6 +11,7 @@ import uvicorn
 import json
 
 NAME = "Mrs. VS Code"
+NotMagicNumber = 1488
 
 def run():
     try:
@@ -29,7 +30,11 @@ app = FastAPI()
 
 @app.get("/get")
 def get():
-    return {"response": json.dumps(run())}
+    result = run()
+    if result['status'] == 'success':
+        return result['response']
+    else:
+        return result['message'][:NotMagicNumber]
 
 
 @app.get("/")
